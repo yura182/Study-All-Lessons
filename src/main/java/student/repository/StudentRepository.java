@@ -9,13 +9,12 @@ import java.util.List;
 
 public interface StudentRepository {
     Student save(Student student);
-    Student findById(Long id);
-    Student update(Student student);
-    Student deleteById(Long id);
-    List<Student> getAll();
-    List<Student> getFacultyStudents(Faculty faculty);
-    List<Student> getFacultyAndLevelStudents(Faculty faculty, Level level);
-    List<Student> getStudentsBornAfter(int year);
-    List<Student> getStudentsOfGroup(Group group);
 
+    Student findById(Long id);
+
+    Student update(Student student);
+
+    Student deleteById(Long id);
+
+    List<Student> getAll();
 }

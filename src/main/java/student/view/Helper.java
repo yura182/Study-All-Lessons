@@ -1,4 +1,4 @@
-package student;
+package student.view;
 
 import student.domain.*;
 import student.repository.StudentRepository;
@@ -9,8 +9,7 @@ import java.time.LocalDate;
 
 
 public class Helper {
-    public static void createDemo(StudentRepository studentRepository) {
-        StudentService studentService = new StudentServiceImpl(studentRepository);
+    public static void createDemo(StudentService studentService) {
 
         studentService.register((Student.init().withName("Yuriy").withMiddleName("Aleksandrovich").withSurname("Petrashenko")
                 .withBirthDate(LocalDate.of(1998, 4, 11))
