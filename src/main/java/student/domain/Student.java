@@ -17,6 +17,7 @@ public class Student {
     private final Level level;
     private final Group group;
     private final String email;
+    private final String password;
 
     private Student(Builder builder) {
         this.id = nextId++;
@@ -30,20 +31,22 @@ public class Student {
         this.level = builder.level;
         this.group = builder.group;
         this.email = builder.email;
+        this.password = builder.password;
     }
 
-    public Student(Student student, String phoneNumber) {
+    public Student(Student student, String password) {
         this.id = student.id;
         this.name = student.name;
         this.middleName = student.middleName;
         this.surname = student.surname;
         this.birthDate = student.birthDate;
         this.address = student.address;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = student.phoneNumber;
         this.faculty = student.faculty;
         this.level = student.level;
         this.group = student.group;
         this.email = student.email;
+        this.password = password;
     }
 
     public static Builder init() {
@@ -70,6 +73,34 @@ public class Student {
         return id;
     }
 
+    public static Long getNextId() {
+        return nextId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -85,6 +116,7 @@ public class Student {
         private Level level;
         private Group group;
         private String email;
+        private String password;
 
         private Builder() {
         }
@@ -136,6 +168,11 @@ public class Student {
 
         public Builder withEmail(String email) {
             this.email = email;
+            return this;
+        }
+
+        public Builder withPassword(String password) {
+            this.password = password;
             return this;
         }
 

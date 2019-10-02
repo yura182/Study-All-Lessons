@@ -1,6 +1,7 @@
 package student.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import student.domain.Faculty;
 import student.domain.Group;
 import student.domain.Level;
@@ -11,10 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class UniversityServiceImpl implements UniversityService {
 
+    private final StudentRepository studentRepository;
+
     @Autowired
-    private StudentRepository studentRepository;
+    public UniversityServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public List<Student> getAll() {

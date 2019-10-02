@@ -1,38 +1,39 @@
 package student.view;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import student.config.AppConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import student.domain.Faculty;
 import student.domain.Student;
-import student.repository.StudentRepository;
 import student.service.StudentService;
 import student.service.UniversityService;
+import student.validator.StudentValidator;
 
 import java.time.LocalDate;
 import java.util.*;
 
+@Component
 public class Menu {
     private static final String LINE = "---------";
     private static final String LANGUAGE = LINE + "Choose your language" +  LINE
             + "\n1. English(default)\n2. Russian\n3.Your choose: ";
-    private final ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
-    private final StudentRepository studentRepository = appContext.getBean(StudentRepository.class);
-    private final StudentService studentService = appContext.getBean(StudentService.class);
-    private final UniversityService universityService = appContext.getBean(UniversityService.class);
-    private final Validator validator = appContext.getBean(Validator.class);
-    private final Scanner scan = new Scanner(System.in);
+    private static final Scanner SCAN = new Scanner(System.in);
+
+    private final StudentService studentService;
+    private final UniversityService universityService;
+
     private ResourceBundle messages;
     private List<Student> students;
-    private int input;
 
-    public Menu() {
-        Helper.createDemo(studentService);
+    @Autowired
+    public Menu(StudentService studentService, UniversityService universityService) {
+        this.studentService = studentService;
+        this.universityService = universityService;
+        Helper.createDemo(this.studentService);
     }
 
     public void run () {
         System.out.print(LANGUAGE);
-        input = scan.nextInt();
+        int input = SCAN.nextInt();
 
         if (input == 2) {
             setLocale("ru");
@@ -42,9 +43,9 @@ public class Menu {
     }
 
     private void mainMenu() {
-        students = studentRepository.getAll();
+        students = universityService.getAll();
         menu();
-        input = getInput(scan);
+        int input = getInput(SCAN);
 
         if (input < 0 || input > 5) {
             System.out.println(messages.getString("wrong.input"));
@@ -82,105 +83,76 @@ public class Menu {
                 System.out.println("3. " + Faculty.SOCIOLOGY);
                 System.out.println("4. " + Faculty.LAW);
                 System.out.println("0. Exit");
-                this.input = getInput(scan);
-                switch (Faculty.values()[this.input-1]) {
-                    case MATHEMATICS:
-                        facultyStudents(Faculty.MATHEMATICS);
-                        break;
-                    case ELECTRONICS:
-                        facultyStudents(Faculty.ELECTRONICS);
-                        break;
-                    case SOCIOLOGY:
-                        facultyStudents(Faculty.SOCIOLOGY);
-                        break;
-                    case LAW:
-                        facultyStudents(Faculty.LAW);
-                        break;
-                    default:
-                        exit();
-                }
+                facultyChoice(getInput(SCAN));
                 break;
             case 3:
                 System.out.println();
                 System.out.println(LINE + messages.getString("type.in.year") + LINE);
-                this.input = getInput(scan);
+                int year = getInput(SCAN);
                 System.out.println();
-                System.out.println(LINE + messages.getString("students.who.was.born") + " " + this.input + LINE);
+                System.out.println(LINE + messages.getString("students.who.was.born") + " " + year + LINE);
                 Helper.printHeader();
-                universityService.getStudentsBornAfter(this.input).forEach(System.out::println);
+                universityService.getStudentsBornAfter(year).forEach(System.out::println);
                 submenuMenu();
                 break;
             case 4:
                 List<String> data = new ArrayList<>();
                 System.out.println();
                 System.out.println(LINE + messages.getString("registration") + LINE);
-                while (true) {
-                    System.out.print(messages.getString("name") + " ");
-                    String name = scan.next();
-                    if (validator.checkName(name)) {
-                        data.add(name);
-                        break;
-                    }
-                    System.out.println(messages.getString("name.validate"));
-                }
-                while (true) {
-                    System.out.print(messages.getString("surname") + " ");
-                    String surname = scan.next();
-                    if (validator.checkName(surname)) {
-                        data.add(surname);
-                        break;
-                    }
-                    System.out.println(messages.getString("surname.validate"));
-                }
+                System.out.print(messages.getString("name") + " ");
+                data.add(SCAN.next());
+                System.out.print(messages.getString("surname") + " ");
+                data.add(SCAN.next());
                 System.out.print(messages.getString("date") + " ");
-                data.add(scan.next());
+                data.add(SCAN.next());
                 System.out.print(messages.getString("phone") + " ");
-                data.add(scan.next());
-                while (true) {
-                    System.out.print("Email: ");
-                    String email = scan.next();
-                    if (validator.checkEmailCorrectness(email) && !validator.checkEmailExistence(email, students)) {
-                        data.add(email);
-                        break;
-                    }
-                    System.out.println(messages.getString("email.not.correct.and.dont.exist"));
-                }
+                data.add(SCAN.next());
+                System.out.print("Email: ");
+                data.add(SCAN.next());
+                System.out.print(messages.getString("password") + " ");
+                data.add(SCAN.next());
 
                 studentService.register(Student.init()
                         .withName(data.get(0))
                         .withSurname(data.get(1))
                         .withBirthDate(LocalDate.parse(data.get(2)))
                         .withPhone(data.get(3))
-                        .withEmail(data.get(4)).build());
+                        .withEmail(data.get(4))
+                        .withPassword(data.get(5)).build());
                 System.out.println(messages.getString("student.registered"));
                 submenuMenu();
-
                 break;
             case 5:
                 System.out.println();
                 System.out.println(LINE + messages.getString("login.header") + LINE);
+                System.out.print("Email: ");
+                String email = SCAN.next();
+                System.out.print(messages.getString("password") + " ");
+                String password = (SCAN.next());
+                Helper.printHeader();
+                Student student = studentService.login(email, password);
+                System.out.println(student);
+                submenuMenu();
+                break;
+            default:
+                exit();
+        }
+    }
 
-                while (true) {
-                    System.out.print("Email: ");
-                    String email = scan.next();
-                    if (validator.checkEmailCorrectness(email)) {
-                        if (validator.checkEmailExistence(email, students)) {
-                            for (Student student : students) {
-                                if (email.equals(student.getEmail())) {
-                                    System.out.println();
-                                    System.out.println(LINE + messages.getString("account") + LINE);
-                                    Helper.printHeader();
-                                    System.out.println(student);
-                                    break;
-                                }
-                            }
-                            submenuMenu();
-                        }
-                        System.out.println(messages.getString("email.dont.exist"));
-                        mainMenu();
-                    }
-                    System.out.println(messages.getString("email.not.correct"));
-                }
+    private void facultyChoice(int input) {
+        switch (Faculty.values()[input-1]) {
+            case MATHEMATICS:
+                facultyStudents(Faculty.MATHEMATICS);
+                break;
+            case ELECTRONICS:
+                facultyStudents(Faculty.ELECTRONICS);
+                break;
+            case SOCIOLOGY:
+                facultyStudents(Faculty.SOCIOLOGY);
+                break;
+            case LAW:
+                facultyStudents(Faculty.LAW);
+                break;
             default:
                 exit();
         }
@@ -197,7 +169,7 @@ public class Menu {
     private void submenuMenu() {
         System.out.println(messages.getString("back"));
         System.out.println(messages.getString("exit"));
-        this.input = getInput(scan);
+        int input = getInput(SCAN);
         if (input == 1) {
             mainMenu();
         } else {
@@ -205,9 +177,9 @@ public class Menu {
         }
     }
 
-    private int getInput(Scanner scanner) {
+    private int getInput(Scanner SCANner) {
         System.out.print(messages.getString("choose"));
-        return scanner.nextInt();
+        return SCANner.nextInt();
     }
 
     private void setLocale(String ru) {

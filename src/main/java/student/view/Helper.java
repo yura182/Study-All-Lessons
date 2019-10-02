@@ -20,7 +20,8 @@ public class Helper {
                         .withStreet("Gagarina")
                         .withHouse("12v")
                         .build()).withPhone("066-400-36-26")
-                .withFaculty(Faculty.ELECTRONICS).withLevel(Level.FIFTH).withGroup(Group.E5).withEmail("user1@gmail.com")
+                .withFaculty(Faculty.ELECTRONICS).withLevel(Level.FIFTH).withGroup(Group.E5)
+                .withEmail("user1@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Dmitriy").withMiddleName("Vladimirovich").withSurname("Glushko")
@@ -32,7 +33,8 @@ public class Helper {
                         .withStreet("Shevchenko")
                         .withHouse("15")
                         .build()).withPhone("095-203-38-20")
-                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1).withEmail("user2@gmail.com")
+                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1)
+                .withEmail("user2@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Olga").withSurname("Orlova")
@@ -44,7 +46,8 @@ public class Helper {
                         .withStreet("Vasulenka")
                         .withHouse("22a")
                         .build()).withPhone("067-000-12-32")
-                .withFaculty(Faculty.LAW).withLevel(Level.SECOND).withGroup(Group.L2).withEmail("user3@gmail.com")
+                .withFaculty(Faculty.LAW).withLevel(Level.SECOND).withGroup(Group.L2)
+                .withEmail("user3@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Tamara").withMiddleName("Vladimirovna").withSurname("Vasilevnko")
@@ -56,7 +59,8 @@ public class Helper {
                         .withStreet("Balzaka")
                         .withHouse("122")
                         .build()).withPhone("067-122-16-55")
-                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.THIRD).withGroup(Group.M3).withEmail("user4@gmail.com")
+                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.THIRD).withGroup(Group.M3)
+                .withEmail("user4@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Anatoliy").withMiddleName("Olegovich").withSurname("Pushkin")
@@ -68,7 +72,8 @@ public class Helper {
                         .withStreet("Grinchenka")
                         .withHouse("5b")
                         .build()).withPhone("095-203-16-11")
-                .withFaculty(Faculty.ELECTRONICS).withLevel(Level.FOURTH).withGroup(Group.E4).withEmail("user5@gmail.com")
+                .withFaculty(Faculty.ELECTRONICS).withLevel(Level.FOURTH).withGroup(Group.E4)
+                .withEmail("user5@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Tetyana").withMiddleName("Sergiivna").withSurname("Zinchenko")
@@ -80,7 +85,8 @@ public class Helper {
                         .withStreet("Primorska")
                         .withHouse("17")
                         .build()).withPhone("066-300-10-12")
-                .withFaculty(Faculty.LAW).withLevel(Level.FIFTH).withGroup(Group.L5).withEmail("user6@gmail.com")
+                .withFaculty(Faculty.LAW).withLevel(Level.FIFTH).withGroup(Group.L5)
+                .withEmail("user6@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Valeriy").withSurname("Shevchenko")
@@ -92,7 +98,8 @@ public class Helper {
                         .withStreet("Khreshatyk")
                         .withHouse("10")
                         .build()).withPhone("099-555-12-76")
-                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1).withEmail("user7@gmail.com")
+                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1)
+                .withEmail("user7@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Vadim").withSurname("Kycherenko")
@@ -104,7 +111,8 @@ public class Helper {
                         .withStreet("Politechnichna")
                         .withHouse("8")
                         .build()).withPhone("067-985-12-89")
-                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1).withEmail("user8@gmail.com")
+                .withFaculty(Faculty.MATHEMATICS).withLevel(Level.FIRST).withGroup(Group.M1)
+                .withEmail("user8@gmail.com").withPassword("222333444")
                 .build()));
 
         studentService.register((Student.init().withName("Vlad").withSurname("Kycherenko")
@@ -116,7 +124,8 @@ public class Helper {
                         .withStreet("Politechnichna")
                         .withHouse("8")
                         .build()).withPhone("067-985-12-90")
-                .withFaculty(Faculty.SOCIOLOGY).withLevel(Level.FIRST).withGroup(Group.S1).withEmail("user9@gmail.com")
+                .withFaculty(Faculty.SOCIOLOGY).withLevel(Level.FIRST).withGroup(Group.S1)
+                .withEmail("user9@gmail.com").withPassword("222333444")
                 .build()));
     }
 

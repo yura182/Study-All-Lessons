@@ -36,12 +36,4 @@ public class StudentServiceImplTest {
         Assert.assertNotNull(studentService.register(student));
     }
 
-    @Test
-    public void shouldReturnChangedStudent() {
-        Student student = Student.init().build();
-        Student studentChanged = Student.init().withPhone("000-00-00-00").build();
-        when(studentRepository.update(any(Student.class))).thenReturn(studentChanged);
-
-        Assert.assertEquals(studentService.changePhone(student, "000-00-00-00"), studentChanged);
-    }
 }

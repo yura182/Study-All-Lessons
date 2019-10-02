@@ -1,20 +1,20 @@
 package student.repository;
 
-import student.domain.Faculty;
-import student.domain.Group;
-import student.domain.Level;
 import student.domain.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository {
     Student save(Student student);
 
-    Student findById(Long id);
+    Optional<Student> findById(Long id);
 
-    Student update(Student student);
+    Optional<Student> update(Student student);
 
-    Student deleteById(Long id);
+    Optional<Student> deleteById(Long id);
 
     List<Student> getAll();
+
+    Optional<Student> findByEmail(String email);
 }
