@@ -37,12 +37,9 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Optional<Student> findByEmail(String email) {
-        List<Student> students = getAll();
-        for (Student student : students) {
-            if (email.equals(student.getEmail())) {
-                return Optional.of(student);
-            }
-        }
-        return Optional.empty();
+        Optional<Student> student = getAll().stream()
+                .filter(s -> s.getEmail().equals(email))
+                .findAny();
+        return student;
     }
 }
