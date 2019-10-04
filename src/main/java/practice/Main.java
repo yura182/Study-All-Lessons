@@ -1,13 +1,11 @@
 package practice;
 
-public class Main {
-    public static void main(String[] args) {
-        String str = new String("1");
-        Class clsStr = str.getClass();
-        System.out.println(clsStr);
-        Class cls = clsStr.getClass().getSuperclass();
-        System.out.println(cls);
+import java.lang.reflect.Method;
 
-        Object[] array = new Object[Integer.MAX_VALUE-1];
+public class Main {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
+
+
+
     }
 }

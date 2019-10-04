@@ -5,32 +5,21 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayList<E> implements List<E>, Iterable<E>{
+public class ArrayList<E> extends AbstractList implements List<E>, Iterable<E>{
     private static final int DEFAULT_CAPACITY = 10;
 
-    private int size = 0;
     private Object[] elements;
 
     public ArrayList() {
         elements = new Object[DEFAULT_CAPACITY];
     }
-
+    
     public ArrayList(int capacity) {
         if (capacity <= DEFAULT_CAPACITY) {
             elements = new Object[DEFAULT_CAPACITY];
         } else {
             elements = new Object[capacity];
         }
-    }
-
-    @Override
-    public int size() {
-        return this.size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.size == 0;
     }
 
     @Override

@@ -3,23 +3,12 @@ package list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<E> implements List<E>, Iterable<E> {
+public class LinkedList<E> extends AbstractList implements List<E>, Iterable<E> {
     private Node<E> head;
     private Node<E> last;
-    private int size;
 
     public LinkedList() {
 
-    }
-
-    @Override
-    public int size() {
-        return this.size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.size == 0;
     }
 
     @Override
