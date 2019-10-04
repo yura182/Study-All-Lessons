@@ -3,7 +3,7 @@ package list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<E> extends AbstractList implements List<E>, Iterable<E> {
+public class LinkedList<E> extends AbstractList<E> implements List<E>, Iterable<E> {
     private Node<E> head;
     private Node<E> last;
 

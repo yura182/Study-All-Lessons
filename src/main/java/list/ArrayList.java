@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayList<E> extends AbstractList implements List<E>, Iterable<E>{
+public class ArrayList<E> extends AbstractList<E> implements List<E>, Iterable<E>{
     private static final int DEFAULT_CAPACITY = 10;
 
     private Object[] elements;
