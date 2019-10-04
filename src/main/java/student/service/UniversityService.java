@@ -8,16 +8,15 @@ import student.domain.Student;
 import java.util.List;
 
 public interface UniversityService {
-    public List<Student> getAll();
+    List<Student> getAll();
 
-    public List<Student> getFacultyStudents(Faculty faculty);
+    List<Student> getFacultyStudents(Faculty faculty);
 
-    public List<Student> getFacultyAndLevelStudents(Faculty faculty, Level level);
+    List<Student> getFacultyAndLevelStudents(Faculty faculty, Level level);
 
-    public List<Student> getStudentsBornAfter(int year);
+    List<Student> getStudentsBornAfter(int year);
 
-    public List<Student> getStudentsOfGroup(Group group);
-
+    List<Student> getStudentsOfGroup(Group group);
 
 
 }

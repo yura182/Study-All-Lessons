@@ -10,11 +10,10 @@ import student.exception.PasswordGenerationException;
 import student.exception.PasswordNotMatchException;
 import student.repository.StudentRepository;
 import student.validator.StudentValidator;
-import java.util.Objects;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private static final Logger logger = Logger.getLogger(StudentServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(StudentServiceImpl.class);
     private final StudentRepository studentRepository;
     private final StudentValidator studentValidator;
     private final PasswordEncoder passwordEncoder;
@@ -36,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
         String encodePassword = passwordEncoder.encode(student.getPassword())
                 .orElseThrow(() -> new PasswordGenerationException("Password hash generation failed"));
         Student studentWithEncodedPass = new Student(student, encodePassword);
-        logger.info("User registered");
+        LOGGER.info("User registered");
         return studentRepository.save(studentWithEncodedPass);
     }
 
@@ -48,10 +47,10 @@ public class StudentServiceImpl implements StudentService {
         boolean passwordMatch = passwordEncoder.verifyPassword(password, student.getPassword());
 
         if (!passwordMatch) {
-            logger.warn("Incorrect Password");
+            LOGGER.warn("Incorrect Password");
             throw new PasswordNotMatchException("Password is incorrect");
         }
-        logger.info("User logged in");
+        LOGGER.info("User logged in");
         return student;
     }
 }

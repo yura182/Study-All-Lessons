@@ -17,7 +17,8 @@ public class Address implements Cloneable{
     }
 
     @Override
-    public Address clone() {
+    public Address clone() throws CloneNotSupportedException {
+        super.clone();
         return new Address(this);
     }
 

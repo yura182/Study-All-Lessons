@@ -4,7 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class IpValidating {
-    private static final String IP4_PATTERN = "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$";
+    private static final String IP4_PATTERN = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                                            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                                            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                                            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     private static final String IP6_PATTERN = "([A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}";
 
     private IpValidating() {
@@ -32,4 +35,5 @@ public class IpValidating {
 
         return false;
     }
+
 }

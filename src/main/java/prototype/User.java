@@ -2,7 +2,7 @@ package prototype;
 
 import java.util.Objects;
 
-public class User implements Cloneable{
+public class User implements Cloneable {
     private final Address address;
     private final String name;
     private final String surname;
@@ -13,14 +13,15 @@ public class User implements Cloneable{
         this.surname = surname;
     }
 
-    public User (User prototype) {
+    public User (User prototype) throws CloneNotSupportedException {
         this.name = prototype.name;
         this.surname = prototype.surname;
         this.address = prototype.address.clone();
     }
 
     @Override
-    public User clone() {
+    public User clone() throws CloneNotSupportedException {
+        super.clone();
         return new User(this);
     }
 

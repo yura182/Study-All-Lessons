@@ -1,5 +1,6 @@
 package student.encoder;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKeyFactory;
@@ -13,9 +14,10 @@ import java.util.Optional;
 
 @Component
 public class PasswordEncoder {
+    private static final Logger LOGGER = Logger.getLogger(PasswordEncoder.class);
     private static final SecureRandom RAND = new SecureRandom();
-    private static final int ITERATIONS = 65536;
-    private static final int KEY_LENGTH = 512;
+    private static final int ITERATIONS = 1000;
+    private static final int KEY_LENGTH = 256;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
     private static final String SALT = "EqdmPh53c9x33EygXpTpcoJvc4VXLK";
 
@@ -31,14 +33,13 @@ public class PasswordEncoder {
         PBEKeySpec spec = new PBEKeySpec(chars, bytes, ITERATIONS, KEY_LENGTH);
 
         Arrays.fill(chars, Character.MIN_VALUE);
-
         try {
             SecretKeyFactory fac = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] securePassword = fac.generateSecret(spec).getEncoded();
             return Optional.of(Base64.getEncoder().encodeToString(securePassword));
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            System.err.println("Exception encountered in hashPassword()"); // TODO LOG
+            LOGGER.error("Error during hashing password", ex);
             return Optional.empty();
 
         } finally {
