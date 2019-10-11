@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
@@ -15,8 +14,7 @@ import java.util.Optional;
 @Component
 public class PasswordEncoder {
     private static final Logger LOGGER = Logger.getLogger(PasswordEncoder.class);
-    private static final SecureRandom RAND = new SecureRandom();
-    private static final int ITERATIONS = 1000;
+    private static final int ITERATIONS = 100;
     private static final int KEY_LENGTH = 256;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
     private static final String SALT = "EqdmPh53c9x33EygXpTpcoJvc4VXLK";

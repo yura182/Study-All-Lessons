@@ -162,7 +162,7 @@ public class Menu {
         System.out.println();
         System.out.println(LINE + messages.getString("students.of.faculty") + " " + faculty + LINE);
         Helper.printHeader();
-        universityService.getFacultyStudents(faculty).forEach(student -> System.out.println(student));
+        universityService.getFacultyStudents(faculty).forEach(System.out::println);
         submenuMenu();
     }
 
