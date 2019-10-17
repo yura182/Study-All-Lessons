@@ -4,8 +4,8 @@ import java.io.*;
 
 public class FileReaderTest {
     public static void main(String[] args) {
-        String inFile = "testIn.txt";
-        String outFile = "testOut.txt";
+        String inFile = "./temp/testIn.txt";
+        String outFile = "./temp/testOut.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(inFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(outFile))) {
             String line;

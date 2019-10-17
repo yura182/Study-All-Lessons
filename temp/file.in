@@ -1,0 +1,1 @@
+The helper methods from the accepted answer are not needed. Streams can be used with lambdas or usually shortened using Method References. Streams enable functional operations. map() converts the elements and collect(...) or toArray() wrap the stream back up into an array or collection.

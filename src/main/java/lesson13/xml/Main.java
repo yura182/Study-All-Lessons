@@ -6,7 +6,8 @@ public class Main {
     public static void main(String[] args) {
         User user = new User("Bob", "Barker", 27);
         User newUser = null;
-        String fileName = "user.xml";
+        String fileName = "./temp/user.xml";
+
         try {
             ObjectBinding<User> objectBinding = new ObjectBinding<>(user, fileName);
             objectBinding.objectToXML();

@@ -4,8 +4,8 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-        String in = "file.in";
-        String out = "file.out";
+        String in = "./temp/file.in";
+        String out = "./temp/file.out";
         CharCounter charCounter = new CharCounter();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(in));

@@ -1,36 +1,34 @@
 package lesson13.statistic;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        String in = "file.in";
-        String out = "file.out";
-        CharCounter charCounter = new CharCounter();
-        Map<Character, Integer> symbolToNumber = charCounter.getFileStatistic(in);
+        String inFileName = "./temp/file.in";
+        String outFileName = "./temp/file.out";
+        SymbolCounter symbolCounter = new SymbolCounter();
+        Map<Character, Integer> symbolToNumber;
+        FileIO fileIO = new FileIO();
+
+        try {
+            symbolToNumber = symbolCounter.getFileStatistic(inFileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         symbolToNumber.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach((k) -> System.out.println(k.getKey() + " - " + k.getValue()));
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(out))) {
-            symbolToNumber.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.comparingByKey())
-                    .forEach((k) -> {
-                        try {
-                            writer.write(k.getKey() + " - " + k.getValue());
-                            writer.newLine();
-                        } catch (IOException e) {
-                            System.out.println("Exception while writing file " + e);
-                        }
-                    });
-        } catch (IOException e) {
-            System.out.println("Exception while opening file " + e);
-        }
+        Stream<String> output = symbolToNumber.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(e -> e.getKey().toString() + " - " + e.getValue());
+
+        fileIO.write(outFileName, output);
+
     }
 }

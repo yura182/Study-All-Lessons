@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-        String fileName = "user.json";
+        String fileName = "./temp/user.json";
         User user = new User("Bob", "Barker", 27);
         Gson gson = new Gson();
 
@@ -17,8 +17,8 @@ public class Main {
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            User newUser = gson.fromJson(new FileReader(fileName), User.class);
-            System.out.println(user);
+            User newUser = gson.fromJson(reader, User.class);
+            System.out.println(newUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
