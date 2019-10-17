@@ -1,4 +1,4 @@
-package lesson13.practice.hortsman;
+package lesson13.practice.hortsmann;
 
 import java.io.IOException;
 import java.nio.file.Files;

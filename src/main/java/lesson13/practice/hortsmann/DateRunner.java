@@ -1,4 +1,4 @@
-package lesson13.practice.hortsman;
+package lesson13.practice.hortsmann;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
