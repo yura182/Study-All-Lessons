@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         PostRequest postRequest = new PostRequest(new URL("https://api.novaposhta.ua/v2.0/json/"));
         DocumentFinder documentFinder = new DocumentFinder(postRequest);
-        LocalDate date = LocalDate.of(2019, 10, 16);
+        LocalDate date = LocalDate.of(2019, 10, 17);
         long firstNumberOfTheDay = documentFinder.findFirstNumberOfTheDay(date, 20450171829749L);
         System.out.println(firstNumberOfTheDay);
 
@@ -29,11 +29,12 @@ public class Main {
         int counter = 1;
         int size = 0;
         long lastNumberOfTheDay = 0;
-        int limit = 20;
+        int limit = 50;
         while (!documentsOfDay.isEmpty() || limit > 0) {
             if (documentsOfDay.isEmpty()) {
-                documentsOfDay = documentFinder.parseDocumentsOfTheDay(date.plusDays(1L), lastNumberOfTheDay + 50);
+                documentsOfDay = documentFinder.parseDocumentsOfTheDay(date.plusDays(1L), lastNumberOfTheDay += 100);
                 limit--;
+                System.out.println(limit);
                 continue;
             }
             ObjectMapper objectMapper = new ObjectMapper();
@@ -57,7 +58,7 @@ public class Main {
             if (counter % 50 == 0) {
                 System.out.println(counter);
             }
-            limit = 20;
+            limit = 50;
         }
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
