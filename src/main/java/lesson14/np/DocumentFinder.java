@@ -22,15 +22,15 @@ public class DocumentFinder {
 
     public Long findFirstNumberOfTheDay(LocalDate date, long initialNumber) throws IOException {
         DocumentResponse[] documents = makeRequest(initialNumber);
-        Long number = getFirstNumberOfDay(date, documents);
+        Optional<Long> number = getFirstNumberOfDay(date, documents);
 
-        while (number == null) {
+        while (!number.isPresent()) {
             long nextNumber = Long.parseLong(documents[documents.length - 1].getNumber());
             documents = makeRequest(nextNumber);
             number = getFirstNumberOfDay(date, documents);
         }
 
-        return number;
+        return number.get();
     }
 
     public List<DocumentResponse> parseDocumentsOfTheDay(LocalDate nextDay, long firstNumber) throws IOException {
@@ -59,23 +59,24 @@ public class DocumentFinder {
     private DocumentResponse[] makeRequest(long initialNumber) throws IOException {
         Gson gson = new Gson();
         String arrayRequest = generateRequest(initialNumber);
-
         String response = postRequest.request(arrayRequest);
-        DocumentResponse[] documents = gson.fromJson(response, DocumentResponse[].class);
-        return documents;
+        return gson.fromJson(response, DocumentResponse[].class);
     }
 
-    private Long getFirstNumberOfDay(LocalDate date, DocumentResponse[] documents) {
+    private Optional<Long> getFirstNumberOfDay(LocalDate date, DocumentResponse[] documents) {
+        LocalDate dateOfDocument;
+
         for (DocumentResponse document : documents) {
             if (document.getDateCreated() == null) {
                 continue;
             }
-            LocalDate dateOfDocument = LocalDate.parse(document.getDateCreated(), FORMATTER);
+            dateOfDocument = LocalDate.parse(document.getDateCreated(), FORMATTER);
             if (dateOfDocument.equals(date)) {
-                return Long.parseLong(document.getNumber());
+                return Optional.of(Long.parseLong(document.getNumber()));
             }
         }
-        return null;
+
+        return Optional.empty();
     }
 
     private String generateRequest(long number) {

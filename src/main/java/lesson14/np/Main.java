@@ -18,27 +18,23 @@ public class Main {
     public static void main(String[] args) throws IOException {
         PostRequest postRequest = new PostRequest(new URL("https://api.novaposhta.ua/v2.0/json/"));
         DocumentFinder documentFinder = new DocumentFinder(postRequest);
-        LocalDate date = LocalDate.of(2019, 10, 17);
-        long firstNumberOfTheDay = documentFinder.findFirstNumberOfTheDay(date, 20450171829749L);
+        LocalDate date = LocalDate.of(2019, 10, 15);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Json<List<Document>> json = new Json<>();
+
+        long firstNumberOfTheDay = documentFinder.findFirstNumberOfTheDay(date, 59000454875954L);
         System.out.println(firstNumberOfTheDay);
+
 
         Instant start = Instant.now();
         List<DocumentResponse> documentsOfDay = documentFinder
                 .parseDocumentsOfTheDay(date.plusDays(1L), firstNumberOfTheDay);
 
         int counter = 1;
-        int size = 0;
-        long lastNumberOfTheDay = 0;
-        int limit = 50;
-        while (!documentsOfDay.isEmpty() || limit > 0) {
-            if (documentsOfDay.isEmpty()) {
-                documentsOfDay = documentFinder.parseDocumentsOfTheDay(date.plusDays(1L), lastNumberOfTheDay += 100);
-                limit--;
-                System.out.println(limit);
-                continue;
-            }
-            ObjectMapper objectMapper = new ObjectMapper();
-            Json<List<Document>> json = new Json<>();
+        int parcels = 0;
+        long lastParsedNumber = 0;
+
+        while (!documentsOfDay.isEmpty()) {
             List<Document> documents = documentsOfDay.stream().map(objectMapper::map).collect(Collectors.toList());
             String documentsJson = json.toJson(documents);
             String filePrefix = String.valueOf(firstNumberOfTheDay).substring(0, 4);
@@ -50,22 +46,24 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            size += documentsOfDay.size();
-            long lastNumber = Long.parseLong(documentsOfDay.get(documentsOfDay.size() - 1).getNumber());
-            lastNumberOfTheDay = lastNumber;
-            documentsOfDay = documentFinder.parseDocumentsOfTheDay(date.plusDays(1L), lastNumber + 1);
+
+            parcels += documentsOfDay.size();
+
+            lastParsedNumber = Long.parseLong(documentsOfDay.get(documentsOfDay.size() - 1).getNumber());
+            documentsOfDay = documentFinder.parseDocumentsOfTheDay(date.plusDays(1L), lastParsedNumber + 1);
+
             counter += 1;
             if (counter % 50 == 0) {
                 System.out.println(counter);
             }
-            limit = 50;
+
         }
+
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
 
-
         String statisticFile = "./src/main/java/lesson14/np/stat/statistic.txt";
-        StringBuilder statistic = getStatistic(date, duration, lastNumberOfTheDay, firstNumberOfTheDay, size);
+        StringBuilder statistic = getStatistic(date, duration, lastParsedNumber, firstNumberOfTheDay, parcels);
 
         try (PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(statisticFile, true)))) {
             printWriter.println(statistic);
