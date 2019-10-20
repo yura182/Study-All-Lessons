@@ -1,0 +1,8 @@
+2019-10-14 - 126161 parcels, first number: 59000454742019, last number: 59000454875954, time: 10 minutes
+2019-10-15 - 322115 parcels, first number: 59000454875956, last number: 59000455213003, time: 27 minutes
+2019-10-16 - 286528 parcels, first number: 59000455213004, last number: 59000455512995, time: 10 minutes
+2019-10-16 - 259026 parcels, first number: 20450171829749, last number: 20450172150335, time: 51 minutes
+2019-10-17 - 271224 parcels, first number: 59000455512996, last number: 59000455796391, time: 22 minutes
+2019-10-18 - 258904 parcels, first number: 59000455796392, last number: 59000456067518, time: 21 minutes
+2019-10-19 - 141120 parcels, first number: 59000456067519, last number: 59000456214310, time: 10 minutes
+

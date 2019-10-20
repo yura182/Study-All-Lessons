@@ -7,10 +7,10 @@ import java.util.stream.Stream;
 
 public class SymbolCounter {
     private final Map<Character, Integer>  charToNumber = new HashMap<>();
-    private final FileIO fileIO = new FileIO();
+    private final FileIO fileIO;
 
-    public SymbolCounter() {
-
+    public SymbolCounter(FileIO fileIO) {
+        this.fileIO = fileIO;
     }
 
     public Map<Character,Integer> getFileStatistic(String fileName) throws IOException{

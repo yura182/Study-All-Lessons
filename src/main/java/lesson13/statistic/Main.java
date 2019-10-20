@@ -8,9 +8,10 @@ public class Main {
     public static void main(String[] args) {
         String inFileName = "./temp/file.in";
         String outFileName = "./temp/file.out";
-        SymbolCounter symbolCounter = new SymbolCounter();
-        Map<Character, Integer> symbolToNumber;
         FileIO fileIO = new FileIO();
+        SymbolCounter symbolCounter = new SymbolCounter(fileIO);
+        Map<Character, Integer> symbolToNumber;
+
 
         try {
             symbolToNumber = symbolCounter.getFileStatistic(inFileName);
